@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { LogOut } from 'lucide-react'
 import { useAuth } from '../../auth/hooks/useAuth'
 import { Button } from '../../../components/Button'
 import { Input } from '../../../components/Input'
@@ -52,8 +53,9 @@ export function SettingsPage() {
 
       {/* Cerrar Sesión */}
       <section className="mt-4">
-        <Button variant="danger" onClick={() => logout()} className="w-full">
-          🚪 {es.auth.logout}
+        <Button variant="danger" onClick={() => logout()} className="w-full flex items-center justify-center gap-2">
+          <LogOut className="w-4 h-4" strokeWidth={2.2} />
+          <span>{es.auth.logout}</span>
         </Button>
       </section>
     </div>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { MapPin, Tag, Check, X, Minus, Plus } from 'lucide-react'
 import type { InventoryItemWithDetails } from '../hooks/useInventory'
 import { Badge } from '../../../components/Badge'
 import { LevelSelector } from '../../../components/LevelSelector'
@@ -72,30 +73,34 @@ export function ItemCard({ item, warningDays = 3 }: ItemCardProps) {
   }
 
   return (
-    <div className="bg-white rounded-2xl p-4 border border-zinc-200/80 shadow-xs flex flex-col gap-3 transition-[box-shadow,border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:shadow-sm hover:border-zinc-300">
+    <div className="bg-card rounded-2xl p-4 border border-border shadow-xs flex flex-col gap-3 transition-[box-shadow,border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:shadow-sm hover:border-border/80">
+      {/* Header del producto */}
       <div className="flex items-start justify-between gap-2">
-        <Link to={`/item/${item.id}`} className="flex-1 group">
-          <h2 className="font-semibold text-zinc-900 group-hover:text-emerald-700 transition-colors">
+        <Link to={`/item/${item.id}`} className="group flex-1 min-w-0">
+          <h3 className="font-semibold text-base text-foreground group-hover:text-primary transition-colors truncate">
             {item.product.name}
-          </h2>
-          <div className="flex items-center gap-2 mt-0.5 text-xs text-zinc-500">
+          </h3>
+          <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground">
             {item.location && (
-              <span className="flex items-center gap-1">
-                <span>{item.location.icon || '📍'}</span>
+              <span className="inline-flex items-center gap-1">
+                <MapPin className="w-3 h-3 text-muted-foreground" strokeWidth={2} />
                 <span>{item.location.name}</span>
               </span>
             )}
-            {item.opened_at && <span className="text-amber-700 font-medium">Abierto</span>}
+            {item.product.category && (
+              <span className="inline-flex items-center gap-1">
+                <Tag className="w-3 h-3 text-muted-foreground" strokeWidth={2} />
+                <span>{item.product.category.name}</span>
+              </span>
+            )}
           </div>
         </Link>
-        {expiryStatus !== 'none' && (
-          <Badge status={expiryStatus} label={expiryText} />
-        )}
+        <Badge status={expiryStatus} label={expiryText} />
       </div>
 
-      {/* Control Rápido de Stock según tracking_type */}
-      <div className="pt-1 border-t border-zinc-100 flex items-center justify-between">
-        {item.product.tracking_type === 'level' && (
+      {/* Controles según tipo de tracking */}
+      <div className="pt-2 border-t border-muted flex items-center justify-between gap-3">
+        {item.product.tracking_type === 'levels' && (
           <LevelSelector
             value={item.level}
             onChange={handleLevelChange}
@@ -105,22 +110,24 @@ export function ItemCard({ item, warningDays = 3 }: ItemCardProps) {
 
         {item.product.tracking_type === 'units' && (
           <div className="flex items-center justify-between w-full">
-            <span className="text-sm font-medium text-zinc-600">Unidades:</span>
+            <span className="text-sm font-medium text-muted-foreground">Unidades:</span>
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => handleQuantityChange(-1)}
-                className="w-9 h-9 flex items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 font-bold active:scale-[0.92] text-zinc-700 hover:bg-zinc-100 transition-[transform,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)]"
+                className="w-9 h-9 flex items-center justify-center rounded-lg border border-border bg-secondary text-foreground active:scale-[0.92] hover:bg-sky-100 transition-[transform,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)]"
+                aria-label="Disminuir cantidad"
               >
-                -
+                <Minus className="w-4 h-4" strokeWidth={2.2} />
               </button>
-              <span className="w-8 text-center font-bold text-zinc-900 tabular-nums">{item.quantity ?? 0}</span>
+              <span className="w-8 text-center font-bold text-foreground tabular-nums">{item.quantity ?? 0}</span>
               <button
                 type="button"
                 onClick={() => handleQuantityChange(1)}
-                className="w-9 h-9 flex items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 font-bold active:scale-[0.92] text-zinc-700 hover:bg-zinc-100 transition-[transform,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)]"
+                className="w-9 h-9 flex items-center justify-center rounded-lg border border-border bg-secondary text-foreground active:scale-[0.92] hover:bg-sky-100 transition-[transform,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)]"
+                aria-label="Aumentar cantidad"
               >
-                +
+                <Plus className="w-4 h-4" strokeWidth={2.2} />
               </button>
             </div>
           </div>
@@ -128,17 +135,27 @@ export function ItemCard({ item, warningDays = 3 }: ItemCardProps) {
 
         {item.product.tracking_type === 'presence' && (
           <div className="flex items-center justify-between w-full">
-            <span className="text-sm font-medium text-zinc-600">Disponibilidad:</span>
+            <span className="text-sm font-medium text-muted-foreground">Disponibilidad:</span>
             <button
               type="button"
               onClick={handlePresenceToggle}
-              className={`min-h-[38px] px-4 rounded-xl text-xs font-semibold border active:scale-[0.96] transition-[transform,background-color,border-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] ${
+              className={`min-h-[38px] px-3.5 flex items-center gap-1.5 rounded-xl text-xs font-semibold border active:scale-[0.96] transition-[transform,background-color,border-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] ${
                 item.has_it
-                  ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
-                  : 'bg-zinc-100 text-zinc-500 border-zinc-200'
+                  ? 'bg-accent text-accent-foreground border-emerald-200'
+                  : 'bg-muted text-muted-foreground border-border'
               }`}
             >
-              {item.has_it ? '✅ Tengo' : '❌ No tengo'}
+              {item.has_it ? (
+                <>
+                  <Check className="w-3.5 h-3.5" strokeWidth={2.5} />
+                  <span>Tengo</span>
+                </>
+              ) : (
+                <>
+                  <X className="w-3.5 h-3.5" strokeWidth={2.5} />
+                  <span>No tengo</span>
+                </>
+              )}
             </button>
           </div>
         )}

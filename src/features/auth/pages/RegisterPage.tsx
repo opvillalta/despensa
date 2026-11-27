@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { PackagePlus } from 'lucide-react'
 import { useAuth } from '../hooks/useAuth'
 import { Button } from '../../../components/Button'
 import { Input } from '../../../components/Input'
@@ -44,10 +45,12 @@ export function RegisterPage() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center px-4 max-w-sm mx-auto">
-      <div className="text-center mb-8">
-        <span className="text-4xl">📦</span>
-        <h1 className="text-2xl font-bold mt-2 text-zinc-900">{es.auth.registerTitle}</h1>
-        <p className="text-sm text-zinc-500 mt-1">{es.auth.registerSubtitle}</p>
+      <div className="text-center mb-8 flex flex-col items-center">
+        <div className="w-14 h-14 rounded-2xl bg-[#f0f6f2] border border-[#cbe0d3] flex items-center justify-center text-[#2d5a3f] mb-3 shadow-xs">
+          <PackagePlus className="w-7 h-7" strokeWidth={2} />
+        </div>
+        <h1 className="text-2xl font-bold text-[#23221e]">{es.auth.registerTitle}</h1>
+        <p className="text-sm text-[#747065] mt-1">{es.auth.registerSubtitle}</p>
       </div>
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-4 bg-white p-6 rounded-2xl shadow-sm border border-zinc-200">

@@ -17,15 +17,15 @@ export function Button({
   
   const sizes = {
     sm: 'min-h-[36px] px-3 text-sm min-w-[36px]',
-    md: 'min-h-[44px] px-4 text-base min-w-[44px]', // Criterio 44x44px min touch target
+    md: 'min-h-[44px] px-4 text-base min-w-[44px]',
     lg: 'min-h-[52px] px-6 text-lg min-w-[52px]',
   }
 
   const variants = {
-    primary: 'bg-emerald-600 text-white hover:bg-emerald-700 shadow-sm shadow-emerald-700/20 active:bg-emerald-800',
-    secondary: 'bg-zinc-100 text-zinc-900 hover:bg-zinc-200 border border-zinc-200/80 active:bg-zinc-300',
-    danger: 'bg-rose-600 text-white hover:bg-rose-700 shadow-sm shadow-rose-700/20 active:bg-rose-800',
-    ghost: 'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 active:bg-zinc-200',
+    primary: 'bg-primary text-primary-foreground hover:bg-emerald-600 shadow-sm shadow-primary/20 active:bg-emerald-700',
+    secondary: 'bg-secondary text-secondary-foreground hover:bg-sky-100 border border-border active:bg-sky-200',
+    danger: 'bg-destructive text-destructive-foreground hover:bg-red-600 shadow-sm shadow-destructive/20 active:bg-red-700',
+    ghost: 'text-muted-foreground hover:bg-secondary hover:text-foreground active:bg-sky-100',
   }
 
   return (

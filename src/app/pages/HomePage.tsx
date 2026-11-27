@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { Clock, TrendingDown } from 'lucide-react'
 import { useInventory } from '../../features/inventory/hooks/useInventory'
 import { ItemCard } from '../../features/inventory/components/ItemCard'
 import { FAB } from '../../components/FAB'
@@ -46,11 +47,11 @@ export function HomePage() {
       {/* Bloque: Vence pronto */}
       <section className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-base font-bold text-zinc-800 flex items-center gap-1.5">
-            <span>⏰</span>
+          <h2 className="text-base font-bold text-[#23221e] flex items-center gap-2">
+            <Clock className="w-4 h-4 text-[#8c5304]" strokeWidth={2.2} />
             <span>{es.home.expiringSoon}</span>
           </h2>
-          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">
+          <span className="text-xs font-semibold px-2 py-0.5 rounded-full bg-[#fef8ee] text-[#8c5304] border border-[#f4ddbe]">
             {expiringItems.length}
           </span>
         </div>
@@ -73,11 +74,11 @@ export function HomePage() {
       {/* Bloque: Se está acabando */}
       <section className="flex flex-col gap-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-base font-bold text-zinc-800 flex items-center gap-1.5">
-            <span>📉</span>
+          <h2 className="text-base font-bold text-[#23221e] flex items-center gap-2">
+            <TrendingDown className="w-4 h-4 text-[#2d5a3f]" strokeWidth={2.2} />
             <span>{es.home.runningLow}</span>
           </h2>
-          <Link to="/compras" className="text-xs font-semibold text-emerald-700 hover:underline">
+          <Link to="/compras" className="text-xs font-semibold text-[#2d5a3f] hover:underline">
             Ver lista
           </Link>
         </div>

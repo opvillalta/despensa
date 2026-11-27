@@ -71,8 +71,8 @@ export const es = {
   home: {
     expiringSoon: 'Vence pronto',
     runningLow: 'Se está acabando',
-    noExpiringSoon: 'Todo está en buen estado 🎉',
-    noRunningLow: 'El stock está bien 👍',
+    noExpiringSoon: 'Todo está en buen estado',
+    noRunningLow: 'El stock está al día',
     addItem: '+ Agregar',
   },
 

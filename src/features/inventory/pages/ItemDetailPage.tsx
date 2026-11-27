@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
+import { FolderOpen, CheckCircle, Trash2, MapPin } from 'lucide-react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../../../lib/supabase'
 import { useAuth } from '../../auth/hooks/useAuth'
@@ -137,7 +138,7 @@ export function ItemDetailPage() {
         <div>
           <h1 className="text-2xl font-bold text-zinc-900">{item.product.name}</h1>
           <p className="text-sm text-zinc-500 mt-1 flex items-center gap-1.5">
-            <span>{item.location?.icon || '📍'}</span>
+            <MapPin className="w-4 h-4 text-[#848074]" strokeWidth={2} />
             <span>{item.location?.name || 'Sin ubicación'}</span>
           </p>
         </div>
@@ -178,30 +179,35 @@ export function ItemDetailPage() {
             variant="secondary"
             onClick={() => markOpenedMutation.mutate()}
             disabled={markOpenedMutation.isPending}
-            className="w-full"
+            className="w-full flex items-center justify-center gap-2"
           >
-            📂 {es.detail.markOpened}
+            <FolderOpen className="w-4 h-4" strokeWidth={2} />
+            <span>{es.detail.markOpened}</span>
           </Button>
         )}
       </div>
 
       {/* Acciones de Ciclo de Vida: Consumido / Desechado */}
-      <div className="bg-white p-5 rounded-2xl border border-zinc-200 shadow-xs flex flex-col gap-3">
-        <h2 className="text-sm font-bold text-zinc-700">Acciones</h2>
+      <div className="bg-white p-5 rounded-2xl border border-[#e9e6dc] shadow-xs flex flex-col gap-3">
+        <h2 className="text-sm font-bold text-[#5e5b52]">Acciones</h2>
         <div className="grid grid-cols-2 gap-3">
           <Button
             variant="primary"
             onClick={() => setConfirmAction('consumed')}
             disabled={updateStatusMutation.isPending}
+            className="flex items-center justify-center gap-1.5"
           >
-            😋 {es.detail.markConsumed}
+            <CheckCircle className="w-4 h-4" strokeWidth={2} />
+            <span>{es.detail.markConsumed}</span>
           </Button>
           <Button
             variant="danger"
             onClick={() => setConfirmAction('discarded')}
             disabled={updateStatusMutation.isPending}
+            className="flex items-center justify-center gap-1.5"
           >
-            🗑️ {es.detail.markDiscarded}
+            <Trash2 className="w-4 h-4" strokeWidth={2} />
+            <span>{es.detail.markDiscarded}</span>
           </Button>
         </div>
       </div>

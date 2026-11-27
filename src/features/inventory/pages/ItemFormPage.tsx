@@ -1,5 +1,6 @@
-import { useState, type FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useState, useEffect, type FormEvent } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
+import { SlidersHorizontal, ChevronUp, ChevronDown, MapPin, Tag } from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../../../lib/supabase'
 import { useAuth } from '../../auth/hooks/useAuth'
@@ -13,13 +14,21 @@ import type { TrackingType, Level } from '../../../lib/shopping'
 
 export function ItemFormPage() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const queryClient = useQueryClient()
   const { householdId, user } = useAuth()
   const { data: locations = [] } = useLocations()
   const { data: categories = [] } = useCategories()
 
   // Form states
-  const [name, setName] = useState('')
+  const [name, setName] = useState(() => searchParams.get('name') || '')
+
+  useEffect(() => {
+    const paramName = searchParams.get('name')
+    if (paramName) {
+      setName(paramName)
+    }
+  }, [searchParams])
   const [locationId, setLocationId] = useState('')
   const [expiryDate, setExpiryDate] = useState('')
   const [trackingType, setTrackingType] = useState<TrackingType>('level')
@@ -161,13 +170,15 @@ export function ItemFormPage() {
         {/* Ubicación */}
         <Select
           label={es.form.location}
+          icon={<MapPin className="w-4 h-4" strokeWidth={2} />}
           value={locationId}
+          placeholder="Elegí dónde guardarlo…"
           onChange={(e) => setLocationId(e.target.value)}
           options={[
-            { value: '', label: 'Seleccionar ubicación…' },
             ...locations.map((loc) => ({
               value: loc.id,
-              label: `${loc.icon || '📍'} ${loc.name}`,
+              label: loc.name,
+              icon: <MapPin className="w-4 h-4" strokeWidth={2} />,
             })),
           ]}
         />
@@ -237,25 +248,37 @@ export function ItemFormPage() {
         )}
 
         {/* Sección Avanzada Colapsada */}
-        <div className="border-t border-zinc-100 pt-3">
+        <div className="border-t border-[#f4f2ec] pt-3">
           <button
             type="button"
             onClick={() => setShowAdvanced(!showAdvanced)}
-            className="flex items-center justify-between w-full text-sm font-semibold text-zinc-600 hover:text-zinc-900"
+            className="flex items-center justify-between w-full text-sm font-semibold text-[#5e5b52] hover:text-[#23221e]"
           >
-            <span>⚙️ {es.form.advanced}</span>
-            <span>{showAdvanced ? '▲' : '▼'}</span>
+            <span className="flex items-center gap-2">
+              <SlidersHorizontal className="w-4 h-4 text-[#848074]" strokeWidth={2} />
+              <span>{es.form.advanced}</span>
+            </span>
+            {showAdvanced ? (
+              <ChevronUp className="w-4 h-4 text-[#848074]" strokeWidth={2} />
+            ) : (
+              <ChevronDown className="w-4 h-4 text-[#848074]" strokeWidth={2} />
+            )}
           </button>
 
           {showAdvanced && (
             <div className="flex flex-col gap-3.5 mt-3 pt-2">
               <Select
                 label={es.form.category}
+                icon={<Tag className="w-4 h-4" strokeWidth={2} />}
                 value={categoryId}
+                placeholder="Elegí una categoría…"
                 onChange={(e) => handleCategoryChange(e.target.value)}
                 options={[
-                  { value: '', label: 'Sin categoría' },
-                  ...categories.map((c) => ({ value: c.id, label: c.name })),
+                  ...categories.map((c) => ({
+                    value: c.id,
+                    label: c.name,
+                    icon: <Tag className="w-4 h-4" strokeWidth={2} />,
+                  })),
                 ]}
               />
 

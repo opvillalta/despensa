@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { ShoppingBag, ArrowDownToLine } from 'lucide-react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '../../../lib/supabase'
 import { useAuth } from '../../auth/hooks/useAuth'
@@ -129,11 +130,11 @@ export function ShoppingPage() {
 
       {/* Lista */}
       {isLoading ? (
-        <div className="text-center py-8 text-zinc-400">{es.errors.loading}</div>
+        <div className="text-center py-8 text-[#9c9789]">{es.errors.loading}</div>
       ) : items.length === 0 ? (
-        <div className="text-center py-12 px-4 bg-white rounded-2xl border border-dashed border-zinc-300">
-          <span className="text-4xl block mb-2">🛒</span>
-          <p className="text-sm font-medium text-zinc-600">{es.shopping.empty}</p>
+        <div className="text-center py-12 px-4 bg-white rounded-2xl border border-dashed border-[#dcd8cc] flex flex-col items-center">
+          <ShoppingBag className="w-10 h-10 text-[#9c9789] mb-2" strokeWidth={1.5} />
+          <p className="text-sm font-medium text-[#5e5b52]">{es.shopping.empty}</p>
         </div>
       ) : (
         <div className="flex flex-col gap-2">
@@ -142,8 +143,8 @@ export function ShoppingPage() {
               key={item.id}
               className={`flex items-center justify-between p-3.5 rounded-xl border transition-all ${
                 item.checked
-                  ? 'bg-zinc-100/70 border-zinc-200 text-zinc-400'
-                  : 'bg-white border-zinc-200/90 text-zinc-800 shadow-2xs'
+                  ? 'bg-[#f4f2ec]/70 border-[#e9e6dc] text-[#9c9789]'
+                  : 'bg-white border-[#e9e6dc] text-[#23221e] shadow-2xs'
               }`}
             >
               <label className="flex items-center gap-3 cursor-pointer flex-1">
@@ -153,9 +154,9 @@ export function ShoppingPage() {
                   onChange={(e) =>
                     toggleItemMutation.mutate({ id: item.id, checked: e.target.checked })
                   }
-                  className="w-5 h-5 rounded-md accent-emerald-600 cursor-pointer"
+                  className="w-5 h-5 rounded-md accent-[#2d5a3f] cursor-pointer"
                 />
-                <span className={`text-sm font-medium ${item.checked ? 'line-through' : ''}`}>
+                <span className={`text-sm font-medium ${item.checked ? 'line-through text-[#9c9789]' : ''}`}>
                   {item.name}
                 </span>
               </label>
@@ -165,9 +166,10 @@ export function ShoppingPage() {
                 <button
                   type="button"
                   onClick={() => navigate(`/agregar?name=${encodeURIComponent(item.name)}`)}
-                  className="text-xs font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 py-1.5 rounded-lg active:scale-95 transition-transform"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#2d5a3f] bg-[#f0f6f2] border border-[#cbe0d3] px-2.5 py-1.5 rounded-lg active:scale-95 transition-transform"
                 >
-                  📥 Guardar
+                  <ArrowDownToLine className="w-3.5 h-3.5" strokeWidth={2.2} />
+                  <span>Guardar</span>
                 </button>
               )}
             </div>

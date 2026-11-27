@@ -1,3 +1,4 @@
+import { CheckCircle2, AlertTriangle, XCircle, MinusCircle } from 'lucide-react'
 import type { ExpiryStatus } from '../lib/expiry'
 import { es } from '../i18n/es'
 
@@ -9,26 +10,27 @@ interface BadgeProps {
 
 export function Badge({ status, label, className = '' }: BadgeProps) {
   const styles = {
-    ok: 'bg-emerald-50 text-emerald-700 border-emerald-200/80',
-    soon: 'bg-amber-50 text-amber-700 border-amber-200/80',
-    expired: 'bg-rose-50 text-rose-700 border-rose-200/80',
-    none: 'bg-zinc-50 text-zinc-600 border-zinc-200/80',
+    ok: 'bg-emerald-50 text-emerald-700 border-emerald-200',
+    soon: 'bg-amber-50 text-amber-700 border-amber-200',
+    expired: 'bg-red-50 text-destructive border-red-200',
+    none: 'bg-muted text-muted-foreground border-border',
   }
 
   const icons = {
-    ok: '🟢',
-    soon: '⚠️',
-    expired: '🔴',
-    none: '⚪',
+    ok: CheckCircle2,
+    soon: AlertTriangle,
+    expired: XCircle,
+    none: MinusCircle,
   }
 
+  const Icon = icons[status]
   const text = label || es.expiry[status]
 
   return (
     <span
       className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-semibold rounded-full border ${styles[status]} ${className}`}
     >
-      <span className="text-[10px]" aria-hidden="true">{icons[status]}</span>
+      <Icon className="w-3.5 h-3.5" strokeWidth={2.2} aria-hidden="true" />
       <span>{text}</span>
     </span>
   )
