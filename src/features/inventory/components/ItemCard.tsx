@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { MapPin, Tag, Check, X, Minus, Plus } from 'lucide-react'
+import { MapPin, Check, X, Minus, Plus } from 'lucide-react'
 import type { InventoryItemWithDetails } from '../hooks/useInventory'
 import { Badge } from '../../../components/Badge'
 import { LevelSelector } from '../../../components/LevelSelector'
@@ -87,12 +87,7 @@ export function ItemCard({ item, warningDays = 3 }: ItemCardProps) {
                 <span>{item.location.name}</span>
               </span>
             )}
-            {item.product.category && (
-              <span className="inline-flex items-center gap-1">
-                <Tag className="w-3 h-3 text-muted-foreground" strokeWidth={2} />
-                <span>{item.product.category.name}</span>
-              </span>
-            )}
+            {item.opened_at && <span className="text-amber-700 font-medium">Abierto</span>}
           </div>
         </Link>
         <Badge status={expiryStatus} label={expiryText} />
@@ -100,7 +95,7 @@ export function ItemCard({ item, warningDays = 3 }: ItemCardProps) {
 
       {/* Controles según tipo de tracking */}
       <div className="pt-2 border-t border-muted flex items-center justify-between gap-3">
-        {item.product.tracking_type === 'levels' && (
+        {item.product.tracking_type === 'level' && (
           <LevelSelector
             value={item.level}
             onChange={handleLevelChange}
