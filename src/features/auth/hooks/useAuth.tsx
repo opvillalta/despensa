@@ -7,6 +7,8 @@ interface AuthContextType {
   session: Session | null
   householdId: string | null
   loading: boolean
+  sendOtp: (email: string) => Promise<{ error: Error | null }>
+  verifyOtp: (email: string, token: string) => Promise<{ data?: unknown; error: Error | null }>
   login: (email: string, pass: string) => Promise<{ data?: unknown; error: Error | null }>
   register: (email: string, pass: string) => Promise<{ data?: { user: User | null; session: Session | null } | null; error: Error | null }>
   logout: () => Promise<void>
@@ -84,6 +86,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return () => subscription.unsubscribe()
   }, [])
 
+  async function sendOtp(email: string) {
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        shouldCreateUser: true,
+      },
+    })
+    return { error }
+  }
+
+  async function verifyOtp(email: string, token: string) {
+    const { data, error } = await supabase.auth.verifyOtp({
+      email,
+      token,
+      type: 'email',
+    })
+    return { data, error }
+  }
+
   async function login(email: string, pass: string) {
     const { data, error } = await supabase.auth.signInWithPassword({ email, password: pass })
     return { data, error }
@@ -99,7 +120,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, session, householdId, loading, login, register, logout }}>
+    <AuthContext.Provider value={{ user, session, householdId, loading, sendOtp, verifyOtp, login, register, logout }}>
       {children}
     </AuthContext.Provider>
   )

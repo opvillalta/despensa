@@ -1,7 +1,6 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { ProtectedRoute } from './ProtectedRoute'
 import { LoginPage } from '../features/auth/pages/LoginPage'
-import { RegisterPage } from '../features/auth/pages/RegisterPage'
 import { HomePage } from './pages/HomePage'
 import { InventoryPage } from '../features/inventory/pages/InventoryPage'
 import { ItemFormPage } from '../features/inventory/pages/ItemFormPage'
@@ -12,7 +11,7 @@ import { SettingsPage } from '../features/settings/pages/SettingsPage'
 export const router = createBrowserRouter([
   // Rutas públicas
   { path: '/login', element: <LoginPage /> },
-  { path: '/registro', element: <RegisterPage /> },
+  { path: '/registro', element: <Navigate to="/login" replace /> },
 
   // Rutas protegidas (con BottomNav)
   {
