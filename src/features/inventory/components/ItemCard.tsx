@@ -72,7 +72,7 @@ export function ItemCard({ item, warningDays = 3 }: ItemCardProps) {
   }
 
   return (
-    <div className="bg-white rounded-2xl p-4 border border-zinc-200/80 shadow-xs flex flex-col gap-3 transition-shadow hover:shadow-sm">
+    <div className="bg-white rounded-2xl p-4 border border-zinc-200/80 shadow-xs flex flex-col gap-3 transition-[box-shadow,border-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] hover:shadow-sm hover:border-zinc-300">
       <div className="flex items-start justify-between gap-2">
         <Link to={`/item/${item.id}`} className="flex-1 group">
           <h2 className="font-semibold text-zinc-900 group-hover:text-emerald-700 transition-colors">
@@ -110,15 +110,15 @@ export function ItemCard({ item, warningDays = 3 }: ItemCardProps) {
               <button
                 type="button"
                 onClick={() => handleQuantityChange(-1)}
-                className="w-9 h-9 flex items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 font-bold active:scale-95 text-zinc-700 hover:bg-zinc-100"
+                className="w-9 h-9 flex items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 font-bold active:scale-[0.92] text-zinc-700 hover:bg-zinc-100 transition-[transform,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)]"
               >
                 -
               </button>
-              <span className="w-8 text-center font-bold text-zinc-900">{item.quantity ?? 0}</span>
+              <span className="w-8 text-center font-bold text-zinc-900 tabular-nums">{item.quantity ?? 0}</span>
               <button
                 type="button"
                 onClick={() => handleQuantityChange(1)}
-                className="w-9 h-9 flex items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 font-bold active:scale-95 text-zinc-700 hover:bg-zinc-100"
+                className="w-9 h-9 flex items-center justify-center rounded-lg border border-zinc-200 bg-zinc-50 font-bold active:scale-[0.92] text-zinc-700 hover:bg-zinc-100 transition-[transform,background-color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)]"
               >
                 +
               </button>
@@ -132,7 +132,7 @@ export function ItemCard({ item, warningDays = 3 }: ItemCardProps) {
             <button
               type="button"
               onClick={handlePresenceToggle}
-              className={`min-h-[38px] px-4 rounded-xl text-xs font-semibold border transition-all ${
+              className={`min-h-[38px] px-4 rounded-xl text-xs font-semibold border active:scale-[0.96] transition-[transform,background-color,border-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] ${
                 item.has_it
                   ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
                   : 'bg-zinc-100 text-zinc-500 border-zinc-200'

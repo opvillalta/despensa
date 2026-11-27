@@ -17,7 +17,7 @@ export function BottomNav() {
             key={to}
             to={to}
             className={({ isActive }) =>
-              `flex flex-col items-center justify-center min-w-[56px] min-h-[50px] rounded-lg transition-colors text-xs font-medium ${
+              `flex flex-col items-center justify-center min-w-[56px] min-h-[50px] rounded-xl transition-[color,transform] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] active:scale-[0.93] text-xs font-medium ${
                 isActive
                   ? 'text-emerald-700 font-bold'
                   : 'text-zinc-500 hover:text-zinc-800'

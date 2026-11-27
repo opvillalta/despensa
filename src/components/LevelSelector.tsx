@@ -25,7 +25,7 @@ export function LevelSelector({ value, onChange, disabled }: LevelSelectorProps)
             type="button"
             disabled={disabled}
             onClick={() => onChange(level)}
-            className={`flex-1 min-h-[38px] flex items-center justify-center gap-1 text-xs sm:text-sm font-semibold rounded-lg transition-all active:scale-95 ${
+            className={`flex-1 min-h-[38px] flex items-center justify-center gap-1 text-xs sm:text-sm font-semibold rounded-lg active:scale-[0.96] transition-[transform,background-color,border-color,color] duration-150 ease-[cubic-bezier(0.23,1,0.32,1)] ${
               isSelected
                 ? `${activeColor} border shadow-xs`
                 : 'text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100'
